@@ -1,12 +1,11 @@
-package com.study.mapper;
-
-import com.study.dto.BoardDto;
-
-import java.util.List;
-
-public interface BoardMapper {
-    String selectWriterById(int boardId);
-
+//package com.study.dao;
+//
+//import com.study.dto.BoardDto;
+//
+//import java.util.List;
+//
+//public interface BoardDao {
+//
 //    // 전체 게시글 출력
 //    public List<BoardDto> getList();
 //
@@ -24,4 +23,5 @@ public interface BoardMapper {
 //
 //    // 글 삭제
 //    public void delete();
-}
+//
+//}

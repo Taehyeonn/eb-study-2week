@@ -16,6 +16,6 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="mapper/mapper.xml"/>
+        <mapper resource="mapper/BoardMapper.xml"/>
     </mappers>
 </configuration>
