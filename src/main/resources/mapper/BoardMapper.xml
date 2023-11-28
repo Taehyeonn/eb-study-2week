@@ -3,8 +3,31 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.study.mapper.BoardMapper">
     <select id="selectWriterById" parameterType="int" resultType="java.lang.String">
-        SELECT board_writer
+        SELECT writer
         FROM board
-        WHERE board_id = #{boardId}
+        WHERE id = #{boardId}
+    </select>
+    <select id="getCategoryList" resultType="com.study.dto.CategoryDto">
+        SELECT *
+        FROM category
+    </select>
+    <select id="getTotalCount" resultType="int">
+        SELECT count(*)
+        FROM board
+    </select>
+    <select id="getBoardList" resultType="com.study.dto.BoardDto">
+        SELECT
+            category.name as categoryName, board.title as title
+            , board.writer as writer, board.view_count as viewCount
+            , board.registration_date as registrationDate, board.modification_date as modificationDate
+            , board.id as id
+        FROM
+            board
+        JOIN
+            category ON board.category_id = category.id
+        ORDER BY
+            registration_date DESC
+        LIMIT
+            #{start}, #{limit}
     </select>
 </mapper>

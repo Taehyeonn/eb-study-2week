@@ -14,7 +14,8 @@ public class BoardDto {
     private String password;
     private String title;
     private String content;
-    private String view_count ; // 조회수
-    private Timestamp registration_date; //등록날짜
-    private Timestamp modification_date; //수정날짜
+    private String viewCount ; // 조회수
+    private Timestamp registrationDate; //등록날짜
+    private Timestamp modificationDate; //수정날짜
+    private String categoryName;
 }

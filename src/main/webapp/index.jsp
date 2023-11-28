@@ -10,9 +10,9 @@
 </h1>
 <br>
 <h2><a href="board/free/list">리스트로 이동</a></h2>
-<h2><a href="board/free/list?boardId=1">리스트로 이동 파라미터</a></h2>
+<h2><a href="board/free/list?id=1">리스트로 이동 파라미터</a></h2>
 <h2><a href="board/free/view">view로 이동</a></h2>
-<h2><a href="board/free/view?boardId=1">view로 이동 파라미터</a></h2>
+<h2><a href="board/free/view?id=1">view로 이동 파라미터</a></h2>
 
 </body>
 </html>
