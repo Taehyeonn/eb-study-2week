@@ -10,48 +10,73 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.study.util.BoardInfo.*;
+import static com.study.util.Utils.getEndDate;
+import static com.study.util.Utils.getStartDate;
+
 public class ListController implements Controller {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     /**
-     * 비즈니스 로직 수행 후 뷰의 논리 이름 반환
-     * model은 파라미터로 처리
+     * 카테고리, 게시글목록, 게시글 개수, 페이징변수를 얻어서 Model에 저장 후 논리주소 반환
      *
-     * @return viewName
+     * @return list
      */
     @Override
     public String process(Map<String, String> paramMap, Map<String, Object> model) {
         log.info("ListController 로직 시작");
-//        List<Member> members = memberRepository.findAll();
-//        model.put("members", members);
         BoardService boardService = new BoardService();
 
-        List<CategoryDto> categoryList = boardService.getCategoryList(); //카테고리 list
-        log.info("categoryList ={}", categoryList);
-
-        int totalCount = boardService.getTotalCount(); // 게시물 총 갯수
+        int totalCount = boardService.getTotalCount(); // 게시물 총 갯수 쿼리호출
         log.info("totalCount ={}", totalCount);
 
-        int pageNum = 1; // 현재 페이지
-        if (paramMap.get("pageNum") != null) {
-            pageNum = Integer.parseInt(paramMap.get("pageNum"));
-        }
-        int limit = 10; // 한페이지에 보여줄 게시글 갯수
-        log.info("boardId ={}", pageNum);
-        int start = (pageNum - 1) * 10;
-        log.info("start ={}", start);
+        List<CategoryDto> categoryList = boardService.getCategoryList(); //카테고리 list 쿼리호출
+        log.info("categoryList ={}", categoryList);
 
-        Map<String, Object> bindingParams = new HashMap<>(); // 바인딩용 파라미터Map
+        int pageNum = (paramMap.get("pageNum") != null) ? Integer.parseInt(paramMap.get("pageNum")) : DEFAULT_PAGE_NUMBER; //현재 페이지(기본값 1)
+        addPageInfoToMap(model, pageNum, totalCount); // 페이지 네비게이션에 필요한 요소들을 모델에 저장하는 메서드
+
+        int start = (pageNum - 1) * PAGE_LIMIT; //페이징 시작 num
+        Map<String, Object> bindingParams = new HashMap<>(); // 게시글 조회 쿼리 바인딩용 파라미터Map
         bindingParams.put("start", start);
-        bindingParams.put("limit", limit);
+        bindingParams.put("limit", PAGE_LIMIT);
+        log.info("bindingParams ={}", bindingParams);
 
-        List<BoardDto> boardList = boardService.getBoardList(bindingParams);
+        List<BoardDto> boardList = boardService.getBoardList(bindingParams); // 게시글 list 쿼리호출
         log.info("boardList ={}", boardList);
 
+        // list.jsp 달력용 values
+        model.put("startDate", getStartDate());
+        model.put("endDate", getEndDate());
+
+        // 현 페이지, 카테고리, 총게시글갯수, 게시글(10개단위)
+        model.put("pageNum", pageNum);
         model.put("categoryList", categoryList);
         model.put("totalCount", totalCount);
         model.put("boardList", boardList);
 
         return "list";
+    }
+
+
+    /**
+     * 페이징 네비게이션에 필요한 동적 변수들을 Map에 저장하는 메서드
+     */
+    private void addPageInfoToMap(Map<String, Object> model, int pageNum, int totalCount) {
+
+        int maxPage = (int) Math.ceil((double)totalCount / PAGE_LIMIT); // 페이지의 전체 개수
+        int startPage = (pageNum-1) / PAGE_LIST_LIMIT * PAGE_LIST_LIMIT + 1; // 인덱스의 시작 페이지
+        int endPage = startPage + PAGE_LIST_LIMIT - 1; //인덱스의 마지막 페이지
+
+        // 만약에 endPage가 lastPage보다 클 때는 endPage를 lastPage로 변경!
+        if(endPage > maxPage) {
+            endPage = maxPage;
+        }
+
+        //페이징용 파라미터
+        model.put("maxPage", maxPage);
+        model.put("startPage", startPage);
+        model.put("endPage", endPage);
+        //
     }
 }

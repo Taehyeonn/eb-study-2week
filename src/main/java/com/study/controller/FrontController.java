@@ -20,10 +20,8 @@ public class FrontController extends HttpServlet {
 
     public FrontController() {
         log.info("FrontController 생성자 실행");
-
         controllerMap.put("/board/free/list", new ListController());
         controllerMap.put("/board/free/view", new ViewController());
-
     }
 
     @Override
@@ -33,7 +31,6 @@ public class FrontController extends HttpServlet {
         // 1. request 객체의 요청 url를 가져온다.
         String requestURI = request.getRequestURI();
         log.info("requestURI ={}", requestURI);
-
 
         // 2. 요청 url과 매칭하는 Controller 객체를 controllerMap에서 가져온다.
         Controller controller = controllerMap.get(requestURI);
@@ -54,15 +51,8 @@ public class FrontController extends HttpServlet {
         MyView view = viewResolver(viewName);
         log.info("컨트롤러에서 받아온 model 값 ={}", model);
 
-//        if (model != null) {
-//            log.info("비어있음");
 //            view.render(request, response);
-//            return;
-//        }
-
         view.render(model, request, response);
-
-
 
     }
 
@@ -81,7 +71,6 @@ public class FrontController extends HttpServlet {
         return paramMap;
     }
 
-
     /**
      * 각 컨트롤러에서 반환받은 논리이름을 view(.jsp) 경로로 만든다
      *
@@ -91,8 +80,5 @@ public class FrontController extends HttpServlet {
     private MyView viewResolver(String viewName) {
         log.info("viewResolver 실행");
         return new MyView("/board/free/" + viewName + ".jsp");
-//        System.out.println("viewName = " + viewName);
-//        return new MyView("/board/" + viewName + ".jsp");
-
     }
 }

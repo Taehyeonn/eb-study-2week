@@ -15,7 +15,6 @@ public class MyView {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private String viewPath;
 
-
     public MyView(String viewPath) {
         this.viewPath = viewPath;
     }
@@ -43,7 +42,6 @@ public class MyView {
 
         modelToRequestAttribute(model, request);
         RequestDispatcher dispatcher = request.getRequestDispatcher(viewPath);
-//        log.info("model ={}", request.getAttribute("model"));
 
         try {
             dispatcher.forward(request, response);
