@@ -51,7 +51,7 @@ public class MyView {
     }
 
     /**
-     * model 값을 request Attribute에 저장해주는 메서드
+     * 컨트롤러에서 받아온 model 값을 request Attribute에 저장해주는 메서드
      */
     private void modelToRequestAttribute(Map<String, Object> model, HttpServletRequest request) {
 //        log.info("model ={}", model);
