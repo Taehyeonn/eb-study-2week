@@ -1,5 +1,6 @@
 package com.study.service;
 
+import com.study.connection.MyBatisConnectionFactory;
 import com.study.dto.BoardDto;
 import com.study.dto.CategoryDto;
 import com.study.mapper.BoardMapper;
@@ -15,86 +16,93 @@ import java.util.Map;
 
 public class BoardService {
 
-    public String getWriterById(int boardId) {
-        String resource = "mybatis-config.xml";
-        SqlSession session = null;
-
-        try {
-            InputStream inputStream = Resources.getResourceAsStream(resource);
-            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-            session = sqlSessionFactory.openSession();
-
-            BoardMapper boardMapper = session.getMapper(BoardMapper.class);
-            return boardMapper.selectWriterById(boardId);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-    }
-
     public List<CategoryDto> getCategoryList() {
-        String resource = "mybatis-config.xml";
-        SqlSession session = null;
+        SqlSession sqlSession = null;
 
         try {
-            InputStream inputStream = Resources.getResourceAsStream(resource);
-            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-            session = sqlSessionFactory.openSession();
-
-            BoardMapper boardMapper = session.getMapper(BoardMapper.class);
+            SqlSessionFactory sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
+            sqlSession = sqlSessionFactory.openSession();
+            BoardMapper boardMapper = sqlSession.getMapper(BoardMapper.class);
             return boardMapper.getCategoryList();
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-            if (session != null) {
-                session.close();
+            if (sqlSession != null) {
+                sqlSession.close();
             }
         }
     }
 
     public int getTotalCount() {
-        String resource = "mybatis-config.xml";
-        SqlSession session = null;
+        SqlSession sqlSession = null;
 
         try {
-            InputStream inputStream = Resources.getResourceAsStream(resource);
-            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-            session = sqlSessionFactory.openSession();
-
-            BoardMapper boardMapper = session.getMapper(BoardMapper.class);
+            SqlSessionFactory sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
+            sqlSession = sqlSessionFactory.openSession();
+            BoardMapper boardMapper = sqlSession.getMapper(BoardMapper.class);
             return boardMapper.getTotalCount();
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-            if (session != null) {
-                session.close();
+            if (sqlSession != null) {
+                sqlSession.close();
             }
         }
     }
 
     public List<BoardDto> getBoardList(Map<String, Object> bindingParams) {
-        String resource = "mybatis-config.xml";
-        SqlSession session = null;
+        SqlSession sqlSession = null;
 
         try {
-            InputStream inputStream = Resources.getResourceAsStream(resource);
-            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-            session = sqlSessionFactory.openSession();
-
-            BoardMapper boardMapper = session.getMapper(BoardMapper.class);
+            SqlSessionFactory sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
+            sqlSession = sqlSessionFactory.openSession();
+            BoardMapper boardMapper = sqlSession.getMapper(BoardMapper.class);
             return boardMapper.getBoardList(bindingParams);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-            if (session != null) {
-                session.close();
+            if (sqlSession != null) {
+                sqlSession.close();
             }
         }
     }
 
+    public BoardDto getBoardById(String id) {
+        SqlSession sqlSession = null;
 
+        try {
+            SqlSessionFactory sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
+            sqlSession = sqlSessionFactory.openSession();
+            BoardMapper boardMapper = sqlSession.getMapper(BoardMapper.class);
+            return boardMapper.getBoardById(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (sqlSession != null) {
+                sqlSession.close();
+            }
+        }
+    }
+
+    public void increaseViewCount(String id) {
+        SqlSession sqlSession = null;
+
+        try {
+            // MyBatis의 SqlSessionFactory를 이용하여 SqlSession을 생성
+            SqlSessionFactory sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
+            sqlSession = sqlSessionFactory.openSession();
+            sqlSession.getMapper(BoardMapper.class).increaseViewCount(id);
+            sqlSession.commit();
+        } catch (Exception e) {
+            if (sqlSession != null) {
+                sqlSession.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (sqlSession != null) {
+                sqlSession.close();
+            }
+        }
+    }
 
 }

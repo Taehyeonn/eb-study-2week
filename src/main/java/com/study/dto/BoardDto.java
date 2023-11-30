@@ -17,5 +17,5 @@ public class BoardDto {
     private String viewCount ; // 조회수
     private Timestamp registrationDate; //등록날짜
     private Timestamp modificationDate; //수정날짜
-    private String categoryName;
+    private String categoryName; //카테고리명(join)
 }

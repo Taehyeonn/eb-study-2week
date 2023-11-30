@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.mapper.CommentMapper">
+    <select id="getCommentsByBoardId" resultType="com.study.dto.CommentDto">
+        SELECT
+            id AS id, board_id AS boardId, content AS content, registration_date AS registrationDate
+        FROM
+            comment
+        WHERE
+            board_id = #{id}
+    </select>
+</mapper>
