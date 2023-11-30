@@ -42,8 +42,10 @@
         </c:otherwise>
     </c:choose>
     <div>
-        <form action="CommentAction?id=${id}&pageNum=${pageNum}" method="get">
-            <label><textarea rows="3" cols="112"></textarea></label>
+        <form action="commentaction" method="get">
+            <label><textarea rows="3" cols="112" name="content"></textarea></label>
+            <input type="hidden" name="id" value="${id}">
+            <input type="hidden" name="pageNum" value="${pageNum}">
             <input type="submit" value="등록">
         </form>
     </div>

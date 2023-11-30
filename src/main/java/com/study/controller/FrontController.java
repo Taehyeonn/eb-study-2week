@@ -22,15 +22,16 @@ public class FrontController extends HttpServlet {
         log.info("FrontController 생성자 실행");
         controllerMap.put("/board/free/list", new ListController());
         controllerMap.put("/board/free/view", new ViewController());
+        controllerMap.put("/board/free/commentaction", new CommentController());
     }
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        log.info("service 실행");
+        log.info("프론트 컨트롤러 실행 실행");
 
         // 1. request 객체의 요청 url를 가져온다.
         String requestURI = request.getRequestURI();
-        log.info("requestURI ={}", requestURI);
+        log.info("접근 URI ={}", requestURI);
 
         // 2. 요청 url과 매칭하는 Controller 객체를 controllerMap에서 가져온다.
         Controller controller = controllerMap.get(requestURI);
@@ -49,7 +50,7 @@ public class FrontController extends HttpServlet {
         // 4. 컨트롤러에서 비즈니스로직 수행 후 뷰의 논리값을 받은 뒤 포워드
         String viewName = controller.process(paramMap, model);
         MyView view = viewResolver(viewName);
-        log.info("컨트롤러에서 받아온 model 값 ={}", model);
+        log.info("로직실행후 컨트롤러에서 받아온 model 값 ={}", model);
 
 //            view.render(request, response);
         view.render(model, request, response);
