@@ -35,7 +35,7 @@
             category.name as categoryName, board.title as title
             , board.writer as writer, board.view_count as viewCount
             , board.registration_date as registrationDate, board.modification_date as modificationDate
-            , board.id as id
+            , board.id as id, board.content AS content
         FROM
             board
         JOIN
@@ -48,4 +48,11 @@
         SET view_count = view_count + 1
         WHERE board.id = #{id}
     </update>
+    <insert id="writeBoard">
+        INSERT INTO board (
+            category_id, writer, password, title, content)
+        VALUES (
+           #{categoryId}, #{writer}, #{password}, #{title}, #{content});
+    </insert>
+
 </mapper>

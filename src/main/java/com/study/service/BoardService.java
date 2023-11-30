@@ -105,4 +105,25 @@ public class BoardService {
         }
     }
 
+    public void writeBoard(Map<String, Object> bindingParams) {
+        SqlSession sqlSession = null;
+
+        try {
+            // MyBatis의 SqlSessionFactory를 이용하여 SqlSession을 생성
+            SqlSessionFactory sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
+            sqlSession = sqlSessionFactory.openSession();
+            sqlSession.getMapper(BoardMapper.class).writeBoard(bindingParams);
+            sqlSession.commit();
+        } catch (Exception e) {
+            if (sqlSession != null) {
+                sqlSession.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (sqlSession != null) {
+                sqlSession.close();
+            }
+        }
+    }
+
 }

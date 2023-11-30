@@ -22,10 +22,10 @@ public interface BoardMapper {
 
     // 조회수 증가
     public void increaseViewCount(String id);
-//
-//    // 글쓰기
-//    public void write();
-//
+
+    // 글쓰기
+    public void writeBoard(Map<String, Object> bindingParams);
+
 //    // 글수정
 //    public void modify();
 //
