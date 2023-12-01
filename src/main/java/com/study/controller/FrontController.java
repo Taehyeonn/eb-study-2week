@@ -25,6 +25,8 @@ public class FrontController extends HttpServlet {
         controllerMap.put("/board/free/commentaction", new CommentController());
         controllerMap.put("/board/free/write", new WriteController());
         controllerMap.put("/board/free/writeaction", new WriteActionController());
+        controllerMap.put("/board/free/modify", new ModifyController());
+        controllerMap.put("/board/free/modifyaction", new ModifyActionController());
     }
 
     @Override

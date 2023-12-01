@@ -126,4 +126,49 @@ public class BoardService {
         }
     }
 
+    public void modifyBoard(Map<String, Object> bindingParams) {
+        SqlSession sqlSession = null;
+
+        try {
+            // MyBatis의 SqlSessionFactory를 이용하여 SqlSession을 생성
+            SqlSessionFactory sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
+            sqlSession = sqlSessionFactory.openSession();
+            sqlSession.getMapper(BoardMapper.class).modifyBoard(bindingParams);
+            sqlSession.commit();
+        } catch (Exception e) {
+            if (sqlSession != null) {
+                sqlSession.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (sqlSession != null) {
+                sqlSession.close();
+            }
+        }
+    }
+
+    public int passwordCheck(Map<String, Object> bindingParams) {
+        SqlSession sqlSession = null;
+
+        int result = 0;
+        try {
+            // MyBatis의 SqlSessionFactory를 이용하여 SqlSession을 생성
+            SqlSessionFactory sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
+            sqlSession = sqlSessionFactory.openSession();
+            result = sqlSession.getMapper(BoardMapper.class).passwordCheck(bindingParams);
+            sqlSession.commit();
+            return result;
+        } catch (Exception e) {
+            if (sqlSession != null) {
+                sqlSession.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (sqlSession != null) {
+                sqlSession.close();
+            }
+        }
+        return result;
+    }
+
 }

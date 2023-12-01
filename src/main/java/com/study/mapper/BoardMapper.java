@@ -26,9 +26,12 @@ public interface BoardMapper {
     // 글쓰기
     public void writeBoard(Map<String, Object> bindingParams);
 
-//    // 글수정
-//    public void modify();
-//
+    // 글수정
+    public void modifyBoard(Map<String, Object> bindingParams);
+
+    // 비밀번호 확인
+    public int passwordCheck(Map<String, Object> bindingParams);
+
 //    // 글 삭제
-//    public void delete();
+//    public void deleteBoard();
 }
