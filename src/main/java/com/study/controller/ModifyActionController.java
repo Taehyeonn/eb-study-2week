@@ -37,7 +37,8 @@ public class ModifyActionController implements Controller {
         log.info("바인딩 파라미터 ={}", bindingParams);
 
 
-        boolean isVali = validation.isWriter(writer) && validation.isContent(content) && validation.isTitle(title); // 유효성 검사
+        boolean isVali = validation.isWriter(writer) && validation.isPassword(password)
+                        && validation.isContent(content) && validation.isTitle(title); // 유효성 검사
 
         boolean isPassword = boardService.passwordCheck(pwCheckParams) == 1; // boardId와 password가 일치하는지 확인.
 
@@ -47,11 +48,11 @@ public class ModifyActionController implements Controller {
         if (isVali && isPassword){
 
             boardService.modifyBoard(bindingParams);
-            model.put("result", "등록 성공");
+            model.put("result", "수정 성공");
         } else {
-            model.put("result", "등록 실패");
+            model.put("result", "수정 실패");
         }
 
-        return "modify-result";
+        return "result";
     }
 }

@@ -47,6 +47,6 @@ public class WriteActionController implements Controller {
             model.put("result", "등록 실패");
         }
 
-        return "write-result";
+        return "result";
     }
 }

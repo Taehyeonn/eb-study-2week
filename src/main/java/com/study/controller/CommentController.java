@@ -27,9 +27,11 @@ public class CommentController implements Controller {
 
         commentService.insertComment(bindingParams);
 
+        model.put("result", "댓글 등록 성공");
+
         log.info("바인딩 파라미터 ={}", bindingParams);
         log.info("파라미터 ={}", paramMap);
 
-        return "comment-result";
+        return "result";
     }
 }
