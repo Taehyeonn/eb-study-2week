@@ -5,7 +5,7 @@
   <title>Title</title>
 </head>
 <body>
-게시글등록성공
+<h2>${result}</h2>
 <a href="/board/free/list">목록으로</a>
 </body>
 </html>
