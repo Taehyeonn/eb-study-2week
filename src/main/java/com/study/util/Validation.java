@@ -10,6 +10,11 @@ public class Validation {
         return writer != null && !writer.trim().isEmpty() && writer.length() >= 3 && writer.length() < 5;
     }
 
+    public boolean isPassword(String password) {
+        return password != null && !password.trim().isEmpty() && password.length() >= 4 && password.length() < 16 &&
+                password.matches("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=]).*$");
+    }
+
     public boolean isPassword(String password, String confirmPassword) {
         return password != null && !password.trim().isEmpty() && password.length() >= 4 && password.length() < 16 &&
                 password.matches("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=]).*$") && password.equals(confirmPassword);

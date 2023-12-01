@@ -171,4 +171,25 @@ public class BoardService {
         return result;
     }
 
+    public void deleteBoard(String id) {
+        SqlSession sqlSession = null;
+
+        try {
+            // MyBatis의 SqlSessionFactory를 이용하여 SqlSession을 생성
+            SqlSessionFactory sqlSessionFactory = MyBatisConnectionFactory.getSqlSessionFactory();
+            sqlSession = sqlSessionFactory.openSession();
+            sqlSession.getMapper(BoardMapper.class).deleteBoard(id);
+            sqlSession.commit();
+        } catch (Exception e) {
+            if (sqlSession != null) {
+                sqlSession.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (sqlSession != null) {
+                sqlSession.close();
+            }
+        }
+    }
+
 }

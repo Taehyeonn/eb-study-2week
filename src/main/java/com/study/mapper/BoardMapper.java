@@ -32,6 +32,6 @@ public interface BoardMapper {
     // 비밀번호 확인
     public int passwordCheck(Map<String, Object> bindingParams);
 
-//    // 글 삭제
-//    public void deleteBoard();
+    // 글 삭제
+    public void deleteBoard(String id);
 }
